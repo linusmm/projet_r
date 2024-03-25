@@ -2,6 +2,18 @@
 library(tidyverse)
 
 #creation picross 5X5
+p5X5<-readxl::read_xlsx("picross_5X5.xlsx",sheet = "snake",col_names = F)
+
+
+library("stringi")
+
+vec<- paste(p5X5$...1,collapse="")
+attributes(gregexpr("1+", vec)[[1]])[["match.length"]]
+
+lapply(p5X5, function(i){attributes(gregexpr("1+", p5X5)[[1]])[["match.length"]]})
+
+
+
 p5X5<-readxl::read_xlsx("picross_5X5.xlsx",sheet = "snake",col_names = F) %>%
   mutate(y=c(1:nrow(.))) %>%
   pivot_longer(cols=1:ncol(.)-1,names_to = "x",values_to = "couleur")%>%
@@ -14,6 +26,8 @@ ggplot(p5X5,aes(x,y,colour=couleur,shape=couleur))+geom_point(size=29)+scale_sha
 
 #Connexion au serveur shiny
 library(shiny)
+library(tidyverse)
+library(png)
   #Page d'entrée de bienvenu
 p5X5<-readxl::read_xlsx("picross_5X5.xlsx",sheet = "snake",col_names = F) %>%
   mutate(y=c(1:nrow(.))) %>%
@@ -21,40 +35,44 @@ p5X5<-readxl::read_xlsx("picross_5X5.xlsx",sheet = "snake",col_names = F) %>%
   mutate(x=as.numeric(paste(substr(x,4,4)))*-1,
          couleur=as.factor(couleur))
 p5X5
-ui<-fluidPage("Bienvenu Etes-vous prêt à jouer?",#Rajouter une image, icône amusante sur chaque bouton?
-              actionButton(inputId = "Facile", label ="Facile",choices=ls(p5X5)),
+choix<-readxl::read_xlsx("Choix niveau.xlsx")
+essai<-readPNG("image.png")
+essai
+
+library('magick')
+
+img <- magick::image_read('./image.png')
+
+ui<-fluidPage(
+              #Rajouter une image, icône amusante sur chaque bouton?
+              #plotOutput("plot",choices= p5X5),
+              #imageOutput("image",width="100%",choices=img),
+              titlePanel("Bienvenu dans le merveilleux monde de la relaxation et du casse tête"),
+              #mainPanel(img(src='image.png', height = '100px', width = '100px')),
+              uiOutput("matrice_boutons"),
+              selectInput(inputId = "niveau", label="niveau",choices = unique(choix$Niveau)),
+              actionButton(inputId = "Facile", label ="Facile",choices=p5X5),#voir en remplaçant par un plotOutput() à l'intérieur
               actionButton(inputId = "Moyen", label ="moyen"),
               actionButton(inputId = "Difficile", label ="Difficile"),
-              actionButton(inputId = "Impossible", label ="Impossible"), plotOutput("plot"))
+              actionButton(inputId = "Impossible", label ="Impossible"))
+
+
 server<-function(input,output,session){
-  f<-reactive({
+  # output$image<-renderImage({ima<-get(input$image,"image")
+  # ima})
+  facile<-reactive({
     input$Facile})
-    output$plot<-renderPlot({
-  })
-}
-shinyApp(ui,server)
-
-ui <- fluidPage("Etes vous prêt pour jouer "
-  titlePanel("Matrice de Boutons avec Shiny"),
-  uiOutput("matrice_boutons")
-)
-
-server <- function(input, output) {
-  output$matrice_boutons <- renderUI({
+    output$matrice_boutons <- renderUI({
     nRows <- 5    # Définir le nombre de lignes
     nCols <- 5    # Définir le nombre de colonnes
-
-
     # Créer une matrice de boutons
     boutons <- lapply(1:(nRows * nCols), function(i) {
-      actionButton(inputId = paste("bouton", i), label = paste("bouton", i),width = 5)
+      actionButton(inputId = paste("bouton", i), label = paste("X", i),width = 5, icon = icon("square"))
     })
-
     # Organiser les boutons en grille
     tagList(div(class = "btn-grid",
                 lapply(split(boutons, ceiling(seq_along(boutons) / nCols)), div, class = "button-row")))
-  })
+    })
 }
-
-shinyApp(ui = ui, server = server)
+shinyApp(ui,server)
 
