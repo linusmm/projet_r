@@ -41,17 +41,19 @@ ui <- fluidPage(
   titlePanel(
     "Bienvenu dans le merveilleux monde de la relaxation et du casse tête"
   ),
-  uiOutput("matrice_boutons"),
-  #selectInput(inputId = "niveau", label="niveau",choices = unique(choix$Niveau)),
-  actionButton(
-    inputId = "Facile",
-    label = "Facile",
-    choices = p5X5
-  ),
-  #voir en remplaçant par un plotOutput() à l'intérieur
-  actionButton(inputId = "Moyen", label = "moyen"),
-  actionButton(inputId = "Difficile", label = "Difficile"),
-  actionButton(inputId = "Impossible", label = "Impossible")
+  sidebarLayout(
+    sidebarPanel(
+      #Choisis le niveau
+      selectInput(inputId = "Niveau",
+                  label = "Select an option:",
+                  choices = c("Facile", "Moyen", "Difficile"),
+                  selected = "Option 1")
+    ),
+    mainPanel(
+      textOutput(outputId = "selected_option"),
+      uiOutput("matrice_boutons")
+    )
+  )
 )
 
 
@@ -59,7 +61,7 @@ server <- function(input, output, session) {
   # output$image<-renderImage({ima<-get(input$image,"image")
   # ima})
   facile <- reactive({
-    input$Facile
+    input$Niveau
   })
   output$matrice_boutons <- renderUI({
     nRows <- 5    # Définir le nombre de lignes
