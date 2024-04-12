@@ -43,7 +43,7 @@ server <- function(input, output, session) {
       Sponsorisé par Mario.
 
       <br><br>
-      Sandrine & XXXX.
+      Sandrine & Linus.
              </p>
              ", type = "success", size="m", html=T, confirmButtonText="C'est parti !", confirmButtonCol='#B74d53') #B74d53 #f3969a #074c87
 
@@ -159,11 +159,11 @@ server <- function(input, output, session) {
         }
         else if (boutons_tempo[i] == 1){
           boutons_tempo[i]=2
-          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#d0d1d2";'))
+          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#f3969a";'))
         }
         else{
           boutons_tempo[i]=0
-          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#f3969a";'))
+          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#F1F1F1";'))
         }
 
         boutons(boutons_tempo)
