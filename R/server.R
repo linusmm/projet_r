@@ -1,6 +1,16 @@
 
 
-server <- function(input, output, session) {
+#' serveur Picross
+#'
+#' @param input inputs
+#' @param output output
+#' @param session session
+#'
+#' @return serveur
+#' @export
+#'
+#' @examples exemple
+app_server <- function(input, output, session) {
 
   # Initialisation ----
 
@@ -43,7 +53,7 @@ server <- function(input, output, session) {
       Sponsorisé par Mario.
 
       <br><br>
-      Sandrine & Linus.
+      Sandrine & Linus
              </p>
              ", type = "success", size="m", html=T, confirmButtonText="C'est parti !", confirmButtonCol='#B74d53') #B74d53 #f3969a #074c87
 
@@ -78,7 +88,7 @@ server <- function(input, output, session) {
   observeEvent(input$submit , {
     name_grille=paste(input$select_taille, sample(c(1:2), 1), sep="_")
 
-    grille(as.data.frame(readxl::read_xlsx(paste0(dirname(getwd()),"/data/grilles.xlsx"), sheet = name_grille, col_names = FALSE, .name_repair = "unique_quiet")))
+    grille(as.data.frame(readxl::read_xlsx(paste0(dirname(getwd()),"/projet_r/data/grilles.xlsx"), sheet = name_grille, col_names = FALSE, .name_repair = "unique_quiet")))
 
     ind_vert <- as.list(apply(grille(), MARGIN=2, function(x){attributes(gregexpr("1+", paste(x,collapse=""))[[1]])[["match.length"]]}))
     ind_hor <- as.list(apply(grille(), MARGIN=1, function(x){attributes(gregexpr("1+", paste(x,collapse=""))[[1]])[["match.length"]]}))
@@ -159,11 +169,11 @@ server <- function(input, output, session) {
         }
         else if (boutons_tempo[i] == 1){
           boutons_tempo[i]=2
-          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#f3969a";'))
+          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#f1f1f1";'))
         }
         else{
           boutons_tempo[i]=0
-          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#F1F1F1";'))
+          runjs(paste0('document.getElementById("bouton', i, '").style.backgroundColor = "#f3969a";'))
         }
 
         boutons(boutons_tempo)

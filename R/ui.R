@@ -4,16 +4,18 @@ library(bslib)
 library(shinyalert)
 library(stringi)
 
-#' Picross game
-#' @name Picross
+
+#' Picross
 #'
 #' @param request
 #'
-#' @return grille de picross avec solution
+#' @return picross
 #' @export
 #'
-#' @examples grille de picross 5x5 en forme de S
-function(request){navbarPage(
+#' @examples en cours
+#'
+#'
+app_ui <- function(request){navbarPage(
 
     tags$link(
     rel = "stylesheet",
@@ -70,7 +72,7 @@ border-color: #560000;
              fluidRow(
                br(),
                ### Image Mario ----
-               img(src="image.png",height='320px',width='380px'),
+               img(src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-PlgzdMtUxyChm-pIleyu53n9v_PurNKhG9J-Pze9nqKGZcfZrHHsVNtLkhIZ-TVwTq4&usqp=CAU",height='320px',width='380px'),
 
                hr(),
 

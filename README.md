@@ -1,2 +1,0 @@
-# picross
-Création de picross
