@@ -1,1 +1,2 @@
-# projet_r
+# picross
+Création de picross
