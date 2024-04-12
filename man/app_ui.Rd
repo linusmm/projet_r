@@ -16,7 +16,7 @@ picross
 Picross
 }
 \examples{
-en cours
+exemple
 
 
 }

@@ -1,9 +1,9 @@
-#' jeu de Picross
+#' lancement du jeu de Picross
 #'
 #' @param ui ui
 #' @param server server
 #'
-#' @return grille de picross avec solution
+#' @return lance la grille de picross avec solution
 #' @export
 #'
 #' @examples exemple

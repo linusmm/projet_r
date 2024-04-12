@@ -12,7 +12,7 @@ library(stringi)
 #' @return picross
 #' @export
 #'
-#' @examples en cours
+#' @examples exemple
 #'
 #'
 app_ui <- function(request){navbarPage(

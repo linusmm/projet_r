@@ -2,7 +2,7 @@
 % Please edit documentation in R/app_shiny.R
 \name{lauch_picross}
 \alias{lauch_picross}
-\title{jeu de Picross}
+\title{lancement du jeu de Picross}
 \usage{
 lauch_picross(ui, server)
 }
@@ -12,10 +12,10 @@ lauch_picross(ui, server)
 \item{server}{server}
 }
 \value{
-grille de picross avec solution
+lance la grille de picross avec solution
 }
 \description{
-jeu de Picross
+lancement du jeu de Picross
 }
 \examples{
 exemple
